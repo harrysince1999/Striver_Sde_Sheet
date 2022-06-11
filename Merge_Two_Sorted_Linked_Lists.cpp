@@ -25,24 +25,37 @@
 
 Node<int>* sortTwoLists(Node<int>* first, Node<int>* second)
 {
-    if(!first)
+    Node<int>* head1 = first;
+    Node<int>* head2 = second;
+    Node<int>* ans= new Node<int>(-1);
+    Node<int>* temp = ans;
+    
+    while(head1!=NULL && head2!=NULL)
     {
-        return second;
+        if(head1->data < head2->data)
+        {
+            temp->next= head1;
+            head1= head1->next;
+        }
+        else
+        {
+            temp->next = head2;
+            head2= head2->next;
+        }
+        temp=temp->next;
     }
-    if(!second)
+    while(head1!=NULL)
     {
-        return first;
+        temp->next = head1;
+        head1= head1->next;
+        temp = temp->next;
     }
-
-    if((first -> data) < (second ->data))
+    while(head2!=NULL)
     {
-        first -> next = sortTwoLists(first -> next, second);
-        return first;
+        temp->next = head2;
+        head2= head2->next;
+        temp = temp->next;
     }
-    else
-    {
-        second -> next = sortTwoLists(first, second -> next);
-        return second;
-    }
+    return ans->next;
 }
 
